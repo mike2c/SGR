@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SGRModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ActivityDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ActivityStartDate" Type="DateTime" Precision="3" />
+    <Property Name="ActivityCompletionDate" Type="DateTime" Precision="3" />
+    <Property Name="RequerimentId" Type="Int32" Nullable="false" />
+    <Property Name="ProgrammerNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Requeriment" Relationship="Self.FK_Activity_Requeriment" FromRole="Activity" ToRole="Requeriment" />
+    <NavigationProperty Name="AlteredObject" Relationship="Self.FK_AlteredObject_Activity" FromRole="Activity" ToRole="AlteredObject" />
+  </EntityType>
+  <EntityType Name="AlteredObject">
+    <Key>
+      <PropertyRef Name="AlteredObjectId" />
+    </Key>
+    <Property Name="ActivityId" Type="Int32" Nullable="false" />
+    <Property Name="AlteredObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ObjectId" Type="Int32" Nullable="false" />
+    <Property Name="Alteration" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Activity" Relationship="Self.FK_AlteredObject_Activity" FromRole="AlteredObject" ToRole="Activity" />
+    <NavigationProperty Name="Object" Relationship="Self.FK_AlteredObject_Object" FromRole="AlteredObject" ToRole="Object" />
+  </EntityType>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="AreaId" />
+    </Key>
+    <Property Name="AreaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AreaName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Area" FromRole="Area" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Assignment">
+    <Key>
+      <PropertyRef Name="AssignmentId" />
+    </Key>
+    <Property Name="AssignmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequerimentId" Type="Int32" />
+    <Property Name="AssignmentDate" Type="DateTime" Precision="0" />
+    <Property Name="Programmer" Type="Int32" Nullable="false" />
+    <Property Name="AsignedBy" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Assignment_Employee" FromRole="Assignment" ToRole="Employee" />
+    <NavigationProperty Name="Employee1" Relationship="Self.FK_Assignment_Employee1" FromRole="Assignment" ToRole="Employee" />
+    <NavigationProperty Name="Requeriment" Relationship="Self.FK_Assignment_Requeriment" FromRole="Assignment" ToRole="Requeriment" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeId" />
+    </Key>
+    <Property Name="EmployeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="JobTitleId" Type="Int32" />
+    <Property Name="AreaId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Area" Relationship="Self.FK_Employee_Area" FromRole="Employee" ToRole="Area" />
+    <NavigationProperty Name="Assignment" Relationship="Self.FK_Assignment_Employee" FromRole="Employee" ToRole="Assignment" />
+    <NavigationProperty Name="Assignment1" Relationship="Self.FK_Assignment_Employee1" FromRole="Employee" ToRole="Assignment" />
+    <NavigationProperty Name="JobTitle" Relationship="Self.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Employee_User" FromRole="Employee" ToRole="User" />
+    <NavigationProperty Name="Requeriment" Relationship="Self.FK_Requeriment_Employee" FromRole="Employee" ToRole="Requeriment" />
+  </EntityType>
+  <EntityType Name="InformationSystem">
+    <Key>
+      <PropertyRef Name="InformationSystemId" />
+    </Key>
+    <Property Name="InformationSystemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InformationSystemName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="InformationSystemAcronym" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Requeriment" Relationship="Self.FK_Requeriment_InformationSystem" FromRole="InformationSystem" ToRole="Requeriment" />
+  </EntityType>
+  <EntityType Name="JobTitle">
+    <Key>
+      <PropertyRef Name="JobTitleId" />
+    </Key>
+    <Property Name="JobTitleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobTitleDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Object">
+    <Key>
+      <PropertyRef Name="ObjectId" />
+    </Key>
+    <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ObjectDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ObjectTypeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AlteredObject" Relationship="Self.FK_AlteredObject_Object" FromRole="Object" ToRole="AlteredObject" />
+    <NavigationProperty Name="ObjectType" Relationship="Self.FK_Object_ObjectType" FromRole="Object" ToRole="ObjectType" />
+  </EntityType>
+  <EntityType Name="ObjectType">
+    <Key>
+      <PropertyRef Name="ObjectTypeId" />
+    </Key>
+    <Property Name="ObjectTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ObjectTypeDescription" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Object" Relationship="Self.FK_Object_ObjectType" FromRole="ObjectType" ToRole="Object" />
+  </EntityType>
+  <EntityType Name="Requeriment">
+    <Key>
+      <PropertyRef Name="RequerimentId" />
+    </Key>
+    <Property Name="RequerimentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="CompletionDate" Type="DateTime" Precision="0" />
+    <Property Name="Author" Type="Int32" Nullable="false" />
+    <Property Name="RequerimentDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RequerimentDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="InformationSystemId" Type="Int32" />
+    <NavigationProperty Name="Activity" Relationship="Self.FK_Activity_Requeriment" FromRole="Requeriment" ToRole="Activity" />
+    <NavigationProperty Name="Assignment" Relationship="Self.FK_Assignment_Requeriment" FromRole="Requeriment" ToRole="Assignment" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Requeriment_Employee" FromRole="Requeriment" ToRole="Employee" />
+    <NavigationProperty Name="InformationSystem" Relationship="Self.FK_Requeriment_InformationSystem" FromRole="Requeriment" ToRole="InformationSystem" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Rol" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_User" FromRole="User" ToRole="Employee" />
+  </EntityType>
+  <Association Name="FK_Activity_Requeriment">
+    <End Role="Requeriment" Type="Self.Requeriment" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requeriment">
+        <PropertyRef Name="RequerimentId" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="RequerimentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AlteredObject_Activity">
+    <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+    <End Role="AlteredObject" Type="Self.AlteredObject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="AlteredObject">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AlteredObject_Object">
+    <End Role="Object" Type="Self.Object" Multiplicity="1" />
+    <End Role="AlteredObject" Type="Self.AlteredObject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Object">
+        <PropertyRef Name="ObjectId" />
+      </Principal>
+      <Dependent Role="AlteredObject">
+        <PropertyRef Name="ObjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Area">
+    <End Role="Area" Type="Self.Area" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="AreaId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Assignment_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Assignment" Type="Self.Assignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeId" />
+      </Principal>
+      <Dependent Role="Assignment">
+        <PropertyRef Name="Programmer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Assignment_Employee1">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Assignment" Type="Self.Assignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeId" />
+      </Principal>
+      <Dependent Role="Assignment">
+        <PropertyRef Name="AsignedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Assignment_Requeriment">
+    <End Role="Requeriment" Type="Self.Requeriment" Multiplicity="0..1" />
+    <End Role="Assignment" Type="Self.Assignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requeriment">
+        <PropertyRef Name="RequerimentId" />
+      </Principal>
+      <Dependent Role="Assignment">
+        <PropertyRef Name="RequerimentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_JobTitle">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobTitle">
+        <PropertyRef Name="JobTitleId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="JobTitleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requeriment_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Requeriment" Type="Self.Requeriment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeId" />
+      </Principal>
+      <Dependent Role="Requeriment">
+        <PropertyRef Name="Author" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requeriment_InformationSystem">
+    <End Role="InformationSystem" Type="Self.InformationSystem" Multiplicity="0..1" />
+    <End Role="Requeriment" Type="Self.Requeriment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InformationSystem">
+        <PropertyRef Name="InformationSystemId" />
+      </Principal>
+      <Dependent Role="Requeriment">
+        <PropertyRef Name="InformationSystemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Object_ObjectType">
+    <End Role="ObjectType" Type="Self.ObjectType" Multiplicity="1" />
+    <End Role="Object" Type="Self.Object" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ObjectType">
+        <PropertyRef Name="ObjectTypeId" />
+      </Principal>
+      <Dependent Role="Object">
+        <PropertyRef Name="ObjectTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SGREntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Activity" EntityType="Self.Activity" />
+    <EntitySet Name="AlteredObject" EntityType="Self.AlteredObject" />
+    <EntitySet Name="Area" EntityType="Self.Area" />
+    <EntitySet Name="Assignment" EntityType="Self.Assignment" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" />
+    <EntitySet Name="InformationSystem" EntityType="Self.InformationSystem" />
+    <EntitySet Name="JobTitle" EntityType="Self.JobTitle" />
+    <EntitySet Name="Object" EntityType="Self.Object" />
+    <EntitySet Name="ObjectType" EntityType="Self.ObjectType" />
+    <EntitySet Name="Requeriment" EntityType="Self.Requeriment" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <AssociationSet Name="FK_Activity_Requeriment" Association="Self.FK_Activity_Requeriment">
+      <End Role="Requeriment" EntitySet="Requeriment" />
+      <End Role="Activity" EntitySet="Activity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AlteredObject_Activity" Association="Self.FK_AlteredObject_Activity">
+      <End Role="Activity" EntitySet="Activity" />
+      <End Role="AlteredObject" EntitySet="AlteredObject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AlteredObject_Object" Association="Self.FK_AlteredObject_Object">
+      <End Role="Object" EntitySet="Object" />
+      <End Role="AlteredObject" EntitySet="AlteredObject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Area" Association="Self.FK_Employee_Area">
+      <End Role="Area" EntitySet="Area" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assignment_Employee" Association="Self.FK_Assignment_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Assignment" EntitySet="Assignment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assignment_Employee1" Association="Self.FK_Assignment_Employee1">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Assignment" EntitySet="Assignment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assignment_Requeriment" Association="Self.FK_Assignment_Requeriment">
+      <End Role="Requeriment" EntitySet="Requeriment" />
+      <End Role="Assignment" EntitySet="Assignment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
+      <End Role="JobTitle" EntitySet="JobTitle" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_User" Association="Self.FK_Employee_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requeriment_Employee" Association="Self.FK_Requeriment_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Requeriment" EntitySet="Requeriment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requeriment_InformationSystem" Association="Self.FK_Requeriment_InformationSystem">
+      <End Role="InformationSystem" EntitySet="InformationSystem" />
+      <End Role="Requeriment" EntitySet="Requeriment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Object_ObjectType" Association="Self.FK_Object_ObjectType">
+      <End Role="ObjectType" EntitySet="ObjectType" />
+      <End Role="Object" EntitySet="Object" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,9 @@
+C:\Users\mcastilloc\documents\visual studio 2015\Projects\EnacalSGR\Data\bin\Debug\Data.dll.config
+C:\Users\mcastilloc\documents\visual studio 2015\Projects\EnacalSGR\Data\bin\Debug\Data.dll
+C:\Users\mcastilloc\documents\visual studio 2015\Projects\EnacalSGR\Data\bin\Debug\Data.pdb
+C:\Users\mcastilloc\documents\visual studio 2015\Projects\EnacalSGR\Data\bin\Debug\EntityFramework.dll
+C:\Users\mcastilloc\documents\visual studio 2015\Projects\EnacalSGR\Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\mcastilloc\documents\visual studio 2015\Projects\EnacalSGR\Data\bin\Debug\EntityFramework.xml
+C:\Users\mcastilloc\documents\visual studio 2015\Projects\EnacalSGR\Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\mcastilloc\documents\visual studio 2015\Projects\EnacalSGR\Data\obj\Debug\Data.dll
+C:\Users\mcastilloc\documents\visual studio 2015\Projects\EnacalSGR\Data\obj\Debug\Data.pdb
